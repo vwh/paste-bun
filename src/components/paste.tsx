@@ -1,8 +1,8 @@
 import { Html } from "@elysiajs/html";
-import type { Paste } from "@/types";
+import type { Paste as PasteType } from "@/types";
 
 interface PasteProps {
-  paste: Paste;
+  paste: PasteType;
   deleteToken: string | undefined;
 }
 
@@ -10,21 +10,38 @@ export default function Paste({ paste, deleteToken }: PasteProps) {
   return (
     <html lang="en">
       <head>
-        <title>Pastes</title>
-        <script src="./public/prism.js"></script>
-        <link href="./public/prism.css" rel="stylesheet"></link>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Paste</title>
+        <script src="./public/prism.js" />
+        <link href="./public/prism.css" rel="stylesheet" />
       </head>
       <body>
-        <h1 safe>Pastes</h1>
-        <pre class="rounded grow w-full">
+        <h1>Paste Viewer</h1>
+        <pre>
           <code class={`language-${paste.highlight} match-braces line-numbers`}>
             {paste.content}
           </code>
         </pre>
-        <p safe>{paste.visitors}</p>
-        <p safe>Expire at: {new Date(paste.expire_at).toLocaleString()}</p>
-        <p safe>Created at: {new Date(paste.created_at).toLocaleString()}</p>
-        <p safe>{deleteToken ? deleteToken : "No delete token"}</p>
+        <div>
+          <div>
+            <span>Visitors:</span>
+            {paste.visitors}
+          </div>
+          <div>
+            <span>Expire at:</span>
+            {new Date(paste.expire_at).toLocaleString()}
+          </div>
+          <div>
+            <span>Created at:</span>
+            {new Date(paste.created_at).toLocaleString()}
+          </div>
+          <div>
+            <span>Delete token:</span>
+            {deleteToken ? `<span >${deleteToken}</span>` : "No delete token"}
+          </div>
+        </div>
+        <script>Prism.highlightAll();</script>
       </body>
     </html>
   );

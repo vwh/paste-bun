@@ -5,20 +5,30 @@ export default function Home() {
   return (
     <html lang="en">
       <head>
-        <title>Pastes</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Paste</title>
       </head>
       <body>
-        <h1>Pastes</h1>
-        <form action="/" method="post">
-          <input type="text" name="content" />
-          <SelectLang />
-          <select name="expiry" id="expiry">
-            <option value="month">One Month</option>
-            <option value="week">One Week</option>
-            <option value="day">One Day</option>
-          </select>
-          <input type="submit" />
-        </form>
+        <main>
+          <nav>
+            <div>
+              <h1>Paste Maker</h1>
+            </div>
+          </nav>
+          <form action="/" method="post">
+            <textarea name="content" placeholder="Enter your content here..." />
+            <div>
+              <SelectLang />
+              <select name="expiry">
+                <option value="month">One Month</option>
+                <option value="week">One Week</option>
+                <option value="day">One Day</option>
+              </select>
+              <input type="submit" value="Create Paste" />
+            </div>
+          </form>
+        </main>
       </body>
     </html>
   );
