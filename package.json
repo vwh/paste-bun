@@ -9,12 +9,12 @@
   "dependencies": {
     "@elysiajs/html": "^1.1.0",
     "@elysiajs/static": "^1.1.0",
+    "@gtramontina.com/elysia-tailwind": "2.0.0",
     "cuid": "^3.0.0",
     "elysia": "latest"
   },
   "devDependencies": {
-    "bun-types": "latest",
-    "tailwindcss": "^3.4.10"
+    "bun-types": "latest"
   },
   "module": "src/index.js"
 }

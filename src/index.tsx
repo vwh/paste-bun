@@ -1,6 +1,7 @@
 import { Elysia, redirect, t } from "elysia";
 import { html, Html } from "@elysiajs/html";
 import { staticPlugin } from "@elysiajs/static";
+import { tailwind } from "@gtramontina.com/elysia-tailwind";
 import {
   getPaste,
   insertPaste,
@@ -14,6 +15,18 @@ import Home from "./components/home";
 
 const app = new Elysia()
   .use(staticPlugin())
+  .use(
+    tailwind({
+      path: "/public/styles.css",
+      source: "./src/tailwind.css",
+      config: "./tailwind.config.js",
+      options: {
+        minify: true,
+        map: true,
+        autoprefixer: false,
+      },
+    })
+  )
   .use(html())
   .get("/", () => <Home />)
   .post(
