@@ -9,15 +9,13 @@ db.exec(statements.CREATE_TABLE);
 
 export function getPaste(id: string): Paste | null {
   const result = db.prepare(statements.RETRIEVE).get(id) as Paste | null;
-
   if (result) {
     if (result?.expire_at <= getNowTime()) {
       db.prepare(statements.DELETE_BY_ID).run(id);
       return null;
-    } else {
-      db.prepare(statements.VISIT).run(id);
-      return result;
     }
+    db.prepare(statements.VISIT).run(id);
+    return result;
   }
   return null;
 }

@@ -2,13 +2,13 @@ import { Elysia, redirect, t } from "elysia";
 import { html, Html } from "@elysiajs/html";
 import { staticPlugin } from "@elysiajs/static";
 import { tailwind } from "@gtramontina.com/elysia-tailwind";
+import { makeCookie, emptyCookie } from "@/utils/cookie";
 import {
   getPaste,
   insertPaste,
   deletePaste,
   getLatestPastes,
 } from "@/database/functions";
-import { makeCookie, emptyCookie } from "@/utils/cookie";
 
 import Paste from "./components/paste";
 import Home from "./components/home";
@@ -18,7 +18,7 @@ const app = new Elysia()
   .use(
     tailwind({
       path: "/public/styles.css",
-      source: "./src/tailwind.css",
+      source: "./src/index.css",
       config: "./tailwind.config.js",
       options: {
         minify: true,
@@ -28,7 +28,7 @@ const app = new Elysia()
     })
   )
   .use(html())
-  .get("/", () => <Home />)
+  .get("/", () => Home())
   .post(
     "/",
     ({ body, set }) => {
@@ -52,13 +52,13 @@ const app = new Elysia()
   .get(
     "/:id",
     ({ params: { id }, cookie: { deleteToken }, set }) => {
-      const result = getPaste(id);
-      if (!result) {
+      const paste = getPaste(id);
+      if (!paste) {
         set.status = 404;
         return "Paste not found.";
       }
       if (deleteToken) set.headers["Set-Cookie"] = emptyCookie;
-      return <Paste paste={result} deleteToken={deleteToken?.value} />;
+      return Paste({ paste: paste, deleteToken: deleteToken.value });
     },
     {
       params: t.Object({
