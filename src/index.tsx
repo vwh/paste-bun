@@ -1,7 +1,6 @@
-import { Elysia, t } from "elysia";
+import { Elysia, redirect, t } from "elysia";
 import { html, Html } from "@elysiajs/html";
 import { staticPlugin } from "@elysiajs/static";
-import type { PastePostBody } from "./types";
 import {
   getPaste,
   insertPaste,
@@ -17,27 +16,55 @@ const app = new Elysia()
   .use(staticPlugin())
   .use(html())
   .get("/", () => <Home />)
-  .get("/:id", ({ params: { id }, cookie: { deleteToken }, set }) => {
-    const result = getPaste(id);
-    if (!result) return <p>Not found</p>;
-    if (deleteToken) set.headers["Set-Cookie"] = emptyCookie;
-    return <Paste paste={result} deleteToken={deleteToken?.value} />;
-  })
-  .post("/", ({ body }: { body: PastePostBody }) => {
-    const { content, expiry, highlight } = body;
-    const [pasteId, deleteToken] = insertPaste(content, highlight, expiry);
-    return new Response(null, {
-      status: 302,
-      headers: {
-        Location: `/${pasteId}`,
-        "Set-Cookie": makeCookie(deleteToken),
-      },
-    });
-  })
-  .get("delete/:id", ({ params: { id } }) => {
-    deletePaste(id);
-    return Response.redirect("/");
-  })
+  .post(
+    "/",
+    ({ body, set }) => {
+      const { content, expiry, highlight } = body;
+      const [pasteId, deleteToken] = insertPaste(content, highlight, expiry);
+      set.headers["Set-Cookie"] = makeCookie(deleteToken);
+      return redirect(`/${pasteId}`);
+    },
+    {
+      body: t.Object({
+        content: t.String(),
+        highlight: t.String(),
+        expiry: t.Enum({
+          month: "month",
+          week: "week",
+          day: "day",
+        }),
+      }),
+    }
+  )
+  .get(
+    "/:id",
+    ({ params: { id }, cookie: { deleteToken }, set }) => {
+      const result = getPaste(id);
+      if (!result) {
+        set.status = 404;
+        return "Paste not found.";
+      }
+      if (deleteToken) set.headers["Set-Cookie"] = emptyCookie;
+      return <Paste paste={result} deleteToken={deleteToken?.value} />;
+    },
+    {
+      params: t.Object({
+        id: t.String(),
+      }),
+    }
+  )
+  .get(
+    "delete/:id",
+    ({ params: { id } }) => {
+      deletePaste(id);
+      return redirect("/");
+    },
+    {
+      params: t.Object({
+        id: t.String(),
+      }),
+    }
+  )
   .listen(3000);
 
 console.log(`Running at ${app.server?.hostname}:${app.server?.port}`);

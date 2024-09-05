@@ -9,9 +9,3 @@ export type Paste = {
   expire_at: number;
   created_at: number;
 };
-
-export type PastePostBody = {
-  content: string;
-  highlight: string;
-  expiry: Period;
-};
