@@ -69,12 +69,10 @@ const app = new Elysia()
   )
   .get(
     "/:id",
-    ({ set, params: { id }, Auth: { ownerId } }) => {
+    ({ error, params: { id }, Auth: { ownerId } }) => {
       const paste = getPaste(id);
-      if (!paste) {
-        set.status = 404;
-        return "Paste not found.";
-      }
+      if (!paste) return error(404, "Paste not found.");
+
       const isOwner = paste.owner === ownerId;
       return Paste({ paste, isOwner });
     },
@@ -86,16 +84,12 @@ const app = new Elysia()
   )
   .get(
     "delete/:id",
-    ({ set, params: { id }, Auth: { ownerId } }) => {
+    ({ error, params: { id }, Auth: { ownerId } }) => {
       const paste = getPaste(id);
-      if (!paste) {
-        set.status = 404;
-        return "Paste not found.";
-      }
-      if (paste.owner !== ownerId) {
-        set.status = 403;
-        return "Forbidden.";
-      }
+      if (!paste) return error(404, "Paste not found.");
+      if (paste.owner !== ownerId)
+        return error(403, "You are not the owner of this paste.");
+
       deletePaste(id);
       return redirect("/");
     },
