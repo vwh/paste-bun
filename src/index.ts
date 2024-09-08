@@ -84,6 +84,22 @@ const app = new Elysia()
     }
   )
   .get(
+    "/raw/:id",
+    ({ error, params: { id }, Auth: { ownerId } }) => {
+      const paste = getPaste(id);
+      if (!paste) return error(404, "Paste not found.");
+
+      return new Response(paste.content, {
+        headers: { "Content-Type": "text/plain" },
+      });
+    },
+    {
+      params: t.Object({
+        id: t.String(),
+      }),
+    }
+  )
+  .get(
     "delete/:id",
     ({ error, params: { id }, Auth: { ownerId } }) => {
       const paste = getPaste(id);

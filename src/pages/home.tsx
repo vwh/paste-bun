@@ -22,7 +22,6 @@ export default function Home() {
               href="https://github.com/vwh/paste-oven"
               target="_blank"
               rel="noopener noreferrer"
-              type="submit"
               class="bg-gray-700 text-gray-200 p-2 rounded"
             >
               <GithubIcon />

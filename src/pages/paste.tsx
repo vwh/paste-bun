@@ -3,6 +3,7 @@ import type { Paste as PasteType } from "@/types";
 
 import GithubIcon from "@/components/icons/github";
 import DeleteIcon from "@/components/icons/delete";
+import FileIcon from "@/components/icons/file";
 
 interface PasteProps {
   paste: PasteType;
@@ -30,10 +31,17 @@ export default function Paste({ paste, isOwner }: PasteProps) {
               href="https://github.com/vwh/paste-oven"
               target="_blank"
               rel="noopener noreferrer"
-              type="submit"
               class="bg-gray-700 text-gray-200 p-2 rounded"
             >
               <GithubIcon />
+            </a>
+            <a
+              href={`/raw/${paste.id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="bg-gray-700 text-gray-200 p-2 rounded"
+            >
+              <FileIcon />
             </a>
             {isOwner && (
               <form action={`/delete/${paste.id}`} method="GET">
