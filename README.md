@@ -1,15 +1,23 @@
-# Elysia with Bun runtime
+<div align="center">
 
-## Getting Started
-To get started with this template, simply paste this command into your terminal:
-```bash
-bun create elysia ./elysia-example
+# Paste Bun
+
+Pastebin alternative built with Elysia, powered by the Bun runtime and SQLite for fast and lightweight text and code snippet sharing.
+
+</div>
+
+## 🚀 Development
+
+To start the development server, run:
+
 ```
-
-## Development
-To start the development server run:
-```bash
 bun run dev
 ```
 
-Open http://localhost:3000/ with your browser to see the result.
+## 🤝 Contributing
+
+Contributions are welcome! Feel free to open a pull request with your improvements or fixes.
+
+## 📄 License
+
+Under the MIT License. See [License](https://github.com/vwh/paste-bun/blob/main/LICENSE) for more information.
