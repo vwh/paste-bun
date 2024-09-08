@@ -17,6 +17,11 @@ export class PasteManager {
   private initializeDatabase(): void {
     this.db.exec(statements.CREATE_TABLE);
     this.db.exec(statements.CREATE_PRAGMA);
+    setInterval(() => {
+      const now = getNowTime();
+      this.db.prepare(statements.CLEAN_EXPIRED_PASTES).run(now);
+      this.db.prepare(statements.VACUUM).run();
+    }, 1000 * 60 * 60 * 24);
   }
 
   public getPaste(id: string): Paste | null {

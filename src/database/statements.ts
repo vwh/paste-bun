@@ -28,6 +28,11 @@ export const statements = {
   DELETE: `
     DELETE FROM pastes WHERE id = ?`,
 
+  CLEAN_EXPIRED_PASTES: `
+    DELETE FROM pastes WHERE expire_at < ?`,
+
+  VACUUM: "VACUUM",
+
   // Creates the PRAGMA statements
   CREATE_PRAGMA: "PRAGMA journal_mode = WAL; PRAGMA synchronous = NORMAL;",
 };
