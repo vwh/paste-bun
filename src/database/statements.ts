@@ -9,7 +9,7 @@ export const statements = {
       token TEXT NOT NULL,
       expire_at DATETIME NOT NULL,
       created_at DATETIME NOT NULL
-    )`,
+    ) WITHOUT ROWID`,
 
   // Insert a new paste
   INSERT: `
@@ -31,4 +31,7 @@ export const statements = {
   // Delete a paste by token
   DELETE_BY_TOKEN: `
     DELETE FROM pastes WHERE token = ?`,
+
+  // Creates the PRAGMA statements
+  CREATE_PRAGMA: "PRAGMA journal_mode = WAL; PRAGMA synchronous = NORMAL;",
 };

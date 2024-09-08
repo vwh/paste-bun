@@ -6,6 +6,7 @@ import cuid from "cuid";
 
 const db = new Database("test.db");
 db.exec(statements.CREATE_TABLE);
+db.exec(statements.CREATE_PRAGMA);
 
 export function getPaste(id: string): Paste | null {
   const result = db.prepare(statements.RETRIEVE).get(id) as Paste | null;
