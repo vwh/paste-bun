@@ -7,6 +7,7 @@ import GithubIcon from "@/components/icons/github";
 import DeleteIcon from "@/components/icons/delete";
 import FileIcon from "@/components/icons/file";
 import PinIcon from "@/components/icons/pin";
+import ClipboardIcon from "@/components/icons/clipboard";
 
 interface PasteProps {
   paste: PasteType;
@@ -36,7 +37,7 @@ export default function Paste({ paste, isOwner }: PasteProps) {
               alt="Logo"
               title="Logo"
             />
-            <h1 class="text-xl font-bold">PasteBun</h1>
+            <h1 class="md:text-xl font-bold">PasteBun</h1>
           </a>
           <div class="flex items-center space-x-1">
             <a
@@ -77,6 +78,14 @@ export default function Paste({ paste, isOwner }: PasteProps) {
                 </a>
               </>
             )}
+            <button
+              id="copy-button"
+              title="Copy"
+              class="bg-gray-700 text-gray-200 p-2 rounded"
+              type="button"
+            >
+              <ClipboardIcon />
+            </button>
           </div>
         </nav>
         <section class="bg-gray-700 flex flex-col justify-center items-center gap-2 border border-gray-600 text-gray-300 py-2 px-4 leading-tight pr-8">
@@ -99,6 +108,7 @@ export default function Paste({ paste, isOwner }: PasteProps) {
           </code>
         </pre>
         <script>Prism.highlightAll();</script>
+        <script>{`document.getElementById('copy-button').addEventListener('click', () => {navigator.clipboard.writeText('${paste.content}');});`}</script>
       </body>
     </html>
   );
