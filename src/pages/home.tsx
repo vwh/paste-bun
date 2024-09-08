@@ -25,6 +25,7 @@ export default function Home() {
             <a
               href="https://github.com/vwh/paste-bun"
               target="_blank"
+              title="GitHub"
               rel="noopener noreferrer"
               class="bg-gray-700 text-gray-200 p-2 rounded"
             >
@@ -54,6 +55,7 @@ export default function Home() {
           />
           <button
             type="submit"
+            title="Submit"
             class="bg-gray-700 text-gray-200 p-2 w-full text-1xl font-bold"
           >
             Submit

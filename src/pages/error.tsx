@@ -36,6 +36,7 @@ export default function ErrorPage({
             <p class="text-gray-300 mb-6">{errorMessage}</p>
             <a
               href="/"
+              title="Go back home"
               class="bg-gray-700 text-gray-200 py-2 px-4 rounded hover:bg-gray-600 transition-colors"
             >
               Go back home

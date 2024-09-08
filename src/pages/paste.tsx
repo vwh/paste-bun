@@ -42,6 +42,7 @@ export default function Paste({ paste, isOwner }: PasteProps) {
             <a
               href="https://github.com/vwh/paste-bun"
               target="_blank"
+              title="GitHub"
               rel="noopener noreferrer"
               class="bg-gray-700 text-gray-200 p-2 rounded"
             >
@@ -50,6 +51,7 @@ export default function Paste({ paste, isOwner }: PasteProps) {
             <a
               href={`/raw/${paste.id}`}
               target="_blank"
+              title="Raw content"
               rel="noopener noreferrer"
               class="bg-gray-700 text-gray-200 p-2 rounded"
             >
@@ -60,6 +62,7 @@ export default function Paste({ paste, isOwner }: PasteProps) {
                 <form action={`/delete/${paste.id}`} method="GET">
                   <button
                     type="submit"
+                    title="Delete"
                     class="bg-gray-700 text-gray-200 p-2 rounded"
                   >
                     <DeleteIcon />
@@ -67,6 +70,7 @@ export default function Paste({ paste, isOwner }: PasteProps) {
                 </form>
                 <a
                   href={`/edit/${paste.id}`}
+                  title="Edit"
                   class="bg-gray-700 text-gray-200 p-2 rounded"
                 >
                   <PinIcon />

@@ -31,6 +31,7 @@ export default function Edit({ paste }: EditProps) {
             <a
               href="https://github.com/vwh/paste-bun"
               target="_blank"
+              title="GitHub"
               rel="noopener noreferrer"
               class="bg-gray-700 text-gray-200 p-2 rounded"
             >
@@ -39,6 +40,7 @@ export default function Edit({ paste }: EditProps) {
             <form action={`/delete/${paste.id}`} method="GET">
               <button
                 type="submit"
+                title="Delete"
                 class="bg-gray-700 text-gray-200 p-2 rounded"
               >
                 <DeleteIcon />
@@ -63,6 +65,7 @@ export default function Edit({ paste }: EditProps) {
           </textarea>
           <button
             type="submit"
+            title="Submit"
             class="bg-gray-700 text-gray-200 p-2 w-full text-1xl font-bold"
           >
             Submit
