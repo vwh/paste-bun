@@ -1,31 +1,15 @@
 import { Elysia, redirect, t } from "elysia";
 
-import { z } from "zod";
 import type { PasteManager } from "@/database";
 import authPlugin from "@/auth";
+
+import { submitSchema, editSchema, handleZodError } from "@/zod";
+import { ZodError } from "zod";
 
 import Home from "@/pages/home";
 import Paste from "@/pages/paste";
 import Edit from "@/pages/edit";
 import ErrorPage from "@/pages/error";
-
-// Zod Schemas
-const Period = z.enum(["month", "week", "day", "hour"]);
-const submitSchema = z.object({
-  content: z
-    .string()
-    .max(5000, "Content must not exceed 5,000 characters.")
-    .min(1, "Content is required."),
-  highlight: z.string().max(20, "Highlight must not exceed 20 characters."),
-  expiry: Period,
-});
-const editSchema = z.object({
-  content: z
-    .string()
-    .max(5000, "Content must not exceed 5,000 characters.")
-    .min(1, "Content is required."),
-  highlight: z.string().max(20, "Highlight must not exceed 20 characters."),
-});
 
 export const createRoutes = (pasteManager: PasteManager) => {
   return new Elysia()
@@ -44,15 +28,9 @@ export const createRoutes = (pasteManager: PasteManager) => {
           );
           return redirect(`/${pasteId}`);
         } catch (err) {
-          if (err instanceof z.ZodError) {
-            const errorMessages = err.errors
-              .map((e) => `${e.path.join(".")}: ${e.message}`)
-              .join(", ");
+          if (err instanceof ZodError) {
             set.status = 400;
-            return ErrorPage({
-              statsMessage: "400 - Bad Request",
-              errorMessage: errorMessages,
-            });
+            return handleZodError(err);
           }
           return error(500, "Internal server error");
         }
@@ -187,15 +165,9 @@ export const createRoutes = (pasteManager: PasteManager) => {
           pasteManager.updatePaste(id, content, highlight);
           return redirect(`/${id}`);
         } catch (err) {
-          if (err instanceof z.ZodError) {
-            const errorMessages = err.errors
-              .map((e) => `${e.path.join(".")}: ${e.message}`)
-              .join(", ");
+          if (err instanceof ZodError) {
             set.status = 400;
-            return ErrorPage({
-              statsMessage: "400 - Bad Request",
-              errorMessage: errorMessages,
-            });
+            return handleZodError(err);
           }
           return error(500, "Internal server error");
         }
