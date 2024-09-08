@@ -3,7 +3,9 @@
   "version": "1.0.50",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "bun run --watch src/index.ts"
+    "dev": "bun run --watch src/index.ts",
+    "build": "bun build ./src/index.ts --target bun --minify --outfile=dist/index.js",
+    "start": "NODE_ENV=production bun run dist/index.js"
   },
   "dependencies": {
     "@elysiajs/html": "^1.1.0",
