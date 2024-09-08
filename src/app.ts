@@ -7,7 +7,7 @@ import { PasteManager } from "@/database";
 import { createRoutes } from "@/routes";
 
 export const createApp = () => {
-  const pasteManager = new PasteManager("test.db");
+  const pasteManager = new PasteManager("./database/database.db");
 
   return new Elysia()
     .use(staticPlugin())

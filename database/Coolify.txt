@@ -1,0 +1,5 @@
+Hello reader.
+This file is just so database folder can be empty
+
+Am using Coolify to host this back-end
+And this folder used for database storage
