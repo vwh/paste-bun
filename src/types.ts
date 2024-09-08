@@ -1,4 +1,4 @@
-export type Period = "day" | "week" | "month";
+export type Period = "hour" | "day" | "week" | "month";
 
 export type Paste = {
   id: string;

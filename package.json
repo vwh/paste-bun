@@ -10,6 +10,7 @@
     "@elysiajs/static": "^1.1.0",
     "@gtramontina.com/elysia-tailwind": "2.0.0",
     "cuid": "^3.0.0",
+    "date-fns": "^3.6.0",
     "elysia": "latest"
   },
   "devDependencies": {

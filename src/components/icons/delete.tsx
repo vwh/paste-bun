@@ -12,7 +12,7 @@ export default function DeleteIcon() {
       stroke-width="2"
       stroke-linecap="round"
       stroke-linejoin="round"
-      class="lucide lucide-trash-2"
+      class="lucide lucide-trash-2 h-5 w-5 md:h-6 md:w-6"
     >
       <title>Delete</title>
       <path d="M3 6h18" />

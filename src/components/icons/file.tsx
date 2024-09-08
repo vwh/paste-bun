@@ -12,7 +12,7 @@ export default function FileIcon() {
       stroke-width="2"
       stroke-linecap="round"
       stroke-linejoin="round"
-      class="lucide lucide-file"
+      class="lucide lucide-file h-5 w-5 md:h-6 md:w-6"
     >
       <title>Raw</title>
       <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />

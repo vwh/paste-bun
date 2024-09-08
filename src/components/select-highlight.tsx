@@ -33,6 +33,7 @@ export default function SelectHighlight() {
     "go-module",
     "graphql",
     "groovy",
+    "html",
     "haskell",
     "java",
     "javadoc",

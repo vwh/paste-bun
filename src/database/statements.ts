@@ -5,7 +5,7 @@ export const statements = {
       id TEXT PRIMARY KEY,
       content TEXT NOT NULL,
       highlight TEXT,
-      visitors INTEGER DEFAULT 0,
+      visitors INTEGER DEFAULT 1,
       owner TEXT NOT NULL,
       expire_at DATETIME NOT NULL,
       created_at DATETIME NOT NULL
@@ -16,7 +16,7 @@ export const statements = {
     INSERT INTO pastes (id, content, highlight, owner, expire_at, created_at)
     VALUES (?, ?, ?, ?, ?, ?)`,
 
-  // Retrieve a paste
+  // Retrieve a paste by id
   RETRIEVE: `
     SELECT * FROM pastes WHERE id = ? LIMIT 1`,
 
@@ -25,7 +25,7 @@ export const statements = {
     UPDATE pastes SET visitors = visitors + 1 WHERE id = ?`,
 
   // Delete a paste by id
-  DELETE_BY_ID: `
+  DELETE: `
     DELETE FROM pastes WHERE id = ?`,
 
   // Creates the PRAGMA statements

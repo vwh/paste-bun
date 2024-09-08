@@ -1,5 +1,6 @@
 import { Html } from "@elysiajs/html";
 
+import Head from "@/components/head";
 import SelectHighlight from "@/components/select-highlight";
 import GithubIcon from "@/components/icons/github";
 
@@ -7,19 +8,22 @@ export default function Home() {
   return (
     <html lang="en">
       <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>PasteOven</title>
-        <link href="./public/styles.css" rel="stylesheet" />
+        <Head />
       </head>
       <body class="bg-gray-800 text-gray-100 h-screen flex flex-col">
         <nav class="bg-gray-800 p-3 flex items-center justify-between">
-          <a href="/">
-            <h1 class="text-xl font-bold">PasteOven</h1>
+          <a href="/" class="flex items-center gap-2">
+            <img
+              class="h-9"
+              src="./public/icons/logo.webp"
+              alt="Logo"
+              title="Logo"
+            />
+            <h1 class="text-xl font-bold">PasteBun</h1>
           </a>
-          <div class="flex items-center space-x-2">
+          <div class="flex items-center space-x-1">
             <a
-              href="https://github.com/vwh/paste-oven"
+              href="https://github.com/vwh/paste-bun"
               target="_blank"
               rel="noopener noreferrer"
               class="bg-gray-700 text-gray-200 p-2 rounded"
@@ -39,6 +43,7 @@ export default function Home() {
               </option>
               <option value="week">One Week</option>
               <option value="day">One Day</option>
+              <option value="hour">One Hour</option>
             </select>
             <SelectHighlight />
           </div>
