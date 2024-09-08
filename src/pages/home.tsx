@@ -33,10 +33,16 @@ export default function Home() {
             </a>
           </div>
         </nav>
-        <form action="/" method="POST" class="flex flex-col flex-grow">
+        <form
+          action="/"
+          method="POST"
+          class="flex flex-col flex-grow"
+          id="check-form"
+        >
           <div class="flex bg-gray-800">
             <select
               name="expiry"
+              id="expiry"
               class="bg-gray-700 w-full border border-gray-600 text-gray-300 py-2 px-4 leading-tight focus:outline-none focus:border-gray-500 appearance-none pr-8"
             >
               <option value="month" selected>
@@ -50,6 +56,7 @@ export default function Home() {
           </div>
           <textarea
             name="content"
+            id="content"
             class="flex-grow resize-none p-4 bg-gray-800 border-gray-700 focus:border-gray-600 focus:outline-none text-gray-300"
             placeholder="Start typing here..."
           />
@@ -61,6 +68,7 @@ export default function Home() {
             Submit
           </button>
         </form>
+        <script src="/public/assets/error.js" />
       </body>
     </html>
   );

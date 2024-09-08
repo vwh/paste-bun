@@ -82,6 +82,7 @@ export default function SelectHighlight() {
   return (
     <select
       name="highlight"
+      id="highlight"
       class="bg-gray-700 w-full border border-gray-600 text-gray-300 py-2 px-4 leading-tight focus:outline-none focus:border-gray-500 appearance-none pr-8"
     >
       {languages.map((lang) => (

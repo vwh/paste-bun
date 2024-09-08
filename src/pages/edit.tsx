@@ -50,6 +50,7 @@ export default function Edit({ paste }: EditProps) {
         </nav>
         <form
           action={`/edit/${paste.id}`}
+          id="check-form"
           method="POST"
           class="flex flex-col flex-grow"
         >
@@ -58,6 +59,7 @@ export default function Edit({ paste }: EditProps) {
           </div>
           <textarea
             name="content"
+            id="content"
             class="flex-grow resize-none p-4 bg-gray-800 border-gray-700 focus:border-gray-600 focus:outline-none text-gray-300"
             placeholder="Start typing here..."
           >
@@ -71,6 +73,7 @@ export default function Edit({ paste }: EditProps) {
             Submit
           </button>
         </form>
+        <script src="/public/assets/error.js" />
       </body>
     </html>
   );

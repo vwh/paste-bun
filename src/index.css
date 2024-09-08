@@ -7,6 +7,17 @@ body {
   font-feature-settings: "rlig" 1, "calt" 1;
 }
 
+.error-message {
+  font-size: 0.975rem;
+  margin-top: 0.25rem;
+  width: 100%;
+  border-top-width: 2px;
+  border-top-color: #4a5568;
+  padding: 0.5rem;
+  text-align: center;
+  color: #e2e8f0;
+}
+
 /* For Webkit browsers like Chrome and Safari */
 ::-webkit-scrollbar {
   width: 8px;
