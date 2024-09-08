@@ -12,12 +12,18 @@ import ErrorPage from "@/pages/error";
 // Zod Schemas
 const Period = z.enum(["month", "week", "day", "hour"]);
 const submitSchema = z.object({
-  content: z.string().max(5000, "Content must not exceed 5,000 characters."),
+  content: z
+    .string()
+    .max(5000, "Content must not exceed 5,000 characters.")
+    .min(1, "Content is required."),
   highlight: z.string().max(20, "Highlight must not exceed 20 characters."),
   expiry: Period,
 });
 const editSchema = z.object({
-  content: z.string().max(5000, "Content must not exceed 5,000 characters."),
+  content: z
+    .string()
+    .max(5000, "Content must not exceed 5,000 characters.")
+    .min(1, "Content is required."),
   highlight: z.string().max(20, "Highlight must not exceed 20 characters."),
 });
 
