@@ -52,6 +52,11 @@ export class PasteManager {
     return pasteId;
   }
 
+  public updatePaste(id: string, content: string, highlight: string): void {
+    const createdTime = getNowTime();
+    this.db.prepare(statements.UPDATE).run(content, highlight, createdTime, id);
+  }
+
   public deletePaste(id: string): void {
     this.db.prepare(statements.DELETE).run(id);
   }

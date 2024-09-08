@@ -6,14 +6,19 @@ import authPlugin from "@/auth";
 
 import Home from "@/pages/home";
 import Paste from "@/pages/paste";
+import Edit from "@/pages/edit";
 import ErrorPage from "@/pages/error";
 
 // Zod Schemas
-export const Period = z.enum(["month", "week", "day", "hour"]);
-export const bodySchema = z.object({
+const Period = z.enum(["month", "week", "day", "hour"]);
+const submitSchema = z.object({
   content: z.string().max(5000, "Content must not exceed 5,000 characters."),
   highlight: z.string().max(20, "Highlight must not exceed 20 characters."),
   expiry: Period,
+});
+const editSchema = z.object({
+  content: z.string().max(5000, "Content must not exceed 5,000 characters."),
+  highlight: z.string().max(20, "Highlight must not exceed 20 characters."),
 });
 
 export const createRoutes = (pasteManager: PasteManager) => {
@@ -24,7 +29,7 @@ export const createRoutes = (pasteManager: PasteManager) => {
       "/",
       ({ set, error, body, Auth: { ownerId } }) => {
         try {
-          const { content, expiry, highlight } = bodySchema.parse(body);
+          const { content, expiry, highlight } = submitSchema.parse(body);
           const pasteId = pasteManager.insertPaste(
             content,
             highlight,
@@ -124,6 +129,78 @@ export const createRoutes = (pasteManager: PasteManager) => {
       {
         params: t.Object({
           id: t.String(),
+        }),
+      }
+    )
+    .get(
+      "edit/:id",
+      ({ set, params: { id }, Auth: { ownerId } }) => {
+        const paste = pasteManager.getPaste(id);
+        if (!paste) {
+          set.status = 404;
+          return ErrorPage({
+            statsMessage: "404 - Not Found",
+            errorMessage: "Paste not found.",
+          });
+        }
+        if (paste.owner !== ownerId) {
+          set.status = 403;
+          return ErrorPage({
+            statsMessage: "403 - Forbidden",
+            errorMessage: "You do not have permission to delete this paste.",
+          });
+        }
+        return Edit({ paste });
+      },
+      {
+        params: t.Object({
+          id: t.String(),
+        }),
+      }
+    )
+    .post(
+      "edit/:id",
+      ({ set, error, params: { id }, body, Auth: { ownerId } }) => {
+        try {
+          const { content, highlight } = editSchema.parse(body);
+          const paste = pasteManager.getPaste(id);
+          if (!paste) {
+            set.status = 404;
+            return ErrorPage({
+              statsMessage: "404 - Not Found",
+              errorMessage: "Paste not found.",
+            });
+          }
+          if (paste.owner !== ownerId) {
+            set.status = 403;
+            return ErrorPage({
+              statsMessage: "403 - Forbidden",
+              errorMessage: "You do not have permission to edit this paste.",
+            });
+          }
+          pasteManager.updatePaste(id, content, highlight);
+          return redirect(`/${id}`);
+        } catch (err) {
+          if (err instanceof z.ZodError) {
+            const errorMessages = err.errors
+              .map((e) => `${e.path.join(".")}: ${e.message}`)
+              .join(", ");
+            set.status = 400;
+            return ErrorPage({
+              statsMessage: "400 - Bad Request",
+              errorMessage: errorMessages,
+            });
+          }
+          return error(500, "Internal server error");
+        }
+      },
+      {
+        params: t.Object({
+          id: t.String(),
+        }),
+        body: t.Object({
+          content: t.String(),
+          highlight: t.String(),
         }),
       }
     );

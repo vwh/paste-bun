@@ -1,10 +1,16 @@
 import { Html } from "@elysiajs/html";
+import type { Paste as PasteType } from "@/types";
 
 import Head from "@/components/head";
 import SelectHighlight from "@/components/select-highlight";
 import GithubIcon from "@/components/icons/github";
+import DeleteIcon from "@/components/icons/delete";
 
-export default function Home() {
+interface EditProps {
+  paste: PasteType;
+}
+
+export default function Edit({ paste }: EditProps) {
   return (
     <html lang="en">
       <head>
@@ -30,28 +36,31 @@ export default function Home() {
             >
               <GithubIcon />
             </a>
+            <form action={`/delete/${paste.id}`} method="GET">
+              <button
+                type="submit"
+                class="bg-gray-700 text-gray-200 p-2 rounded"
+              >
+                <DeleteIcon />
+              </button>
+            </form>
           </div>
         </nav>
-        <form action="/" method="POST" class="flex flex-col flex-grow">
+        <form
+          action={`/edit/${paste.id}`}
+          method="POST"
+          class="flex flex-col flex-grow"
+        >
           <div class="flex bg-gray-800">
-            <select
-              name="expiry"
-              class="bg-gray-700 w-full border border-gray-600 text-gray-300 py-2 px-4 leading-tight focus:outline-none focus:border-gray-500 appearance-none pr-8"
-            >
-              <option value="month" selected>
-                One Month
-              </option>
-              <option value="week">One Week</option>
-              <option value="day">One Day</option>
-              <option value="hour">One Hour</option>
-            </select>
             <SelectHighlight />
           </div>
           <textarea
             name="content"
             class="flex-grow resize-none p-4 bg-gray-800 border-gray-700 focus:border-gray-600 focus:outline-none text-gray-300"
             placeholder="Start typing here..."
-          />
+          >
+            {paste.content}
+          </textarea>
           <button
             type="submit"
             class="bg-gray-700 text-gray-200 p-2 w-full text-1xl font-bold"

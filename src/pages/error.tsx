@@ -22,7 +22,7 @@ export default function ErrorPage({
           <a href="/" class="flex items-center gap-2">
             <img
               class="h-9"
-              src="./public/icons/logo.webp"
+              src="/public/icons/logo.webp"
               alt="Logo"
               title="Logo"
             />

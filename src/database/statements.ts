@@ -20,6 +20,10 @@ export const statements = {
   RETRIEVE: `
     SELECT * FROM pastes WHERE id = ? LIMIT 1`,
 
+  // Update a paste by id
+  UPDATE: `
+    UPDATE pastes SET content = ?, highlight = ?, created_at = ? WHERE id = ?`,
+
   // Increment a paste visitor
   VISIT: `
     UPDATE pastes SET visitors = visitors + 1 WHERE id = ?`,

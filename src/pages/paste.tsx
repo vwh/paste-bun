@@ -6,6 +6,7 @@ import Head from "@/components/head";
 import GithubIcon from "@/components/icons/github";
 import DeleteIcon from "@/components/icons/delete";
 import FileIcon from "@/components/icons/file";
+import PinIcon from "@/components/icons/pin";
 
 interface PasteProps {
   paste: PasteType;
@@ -23,15 +24,15 @@ export default function Paste({ paste, isOwner }: PasteProps) {
     <html lang="en">
       <head>
         <Head />
-        <script src="./public/assets/prism.js" />
-        <link href="./public/assets/prism.css" rel="stylesheet" />
+        <script src="/public/assets/prism.js" />
+        <link href="/public/assets/prism.css" rel="stylesheet" />
       </head>
       <body class="bg-gray-800 text-gray-100 h-screen flex flex-col">
         <nav class="bg-gray-800 p-3 flex items-center justify-between">
           <a href="/" class="flex items-center gap-2">
             <img
               class="h-9"
-              src="./public/icons/logo.webp"
+              src="/public/icons/logo.webp"
               alt="Logo"
               title="Logo"
             />
@@ -55,14 +56,22 @@ export default function Paste({ paste, isOwner }: PasteProps) {
               <FileIcon />
             </a>
             {isOwner && (
-              <form action={`/delete/${paste.id}`} method="GET">
-                <button
-                  type="submit"
+              <>
+                <form action={`/delete/${paste.id}`} method="GET">
+                  <button
+                    type="submit"
+                    class="bg-gray-700 text-gray-200 p-2 rounded"
+                  >
+                    <DeleteIcon />
+                  </button>
+                </form>
+                <a
+                  href={`/edit/${paste.id}`}
                   class="bg-gray-700 text-gray-200 p-2 rounded"
                 >
-                  <DeleteIcon />
-                </button>
-              </form>
+                  <PinIcon />
+                </a>
+              </>
             )}
           </div>
         </nav>
