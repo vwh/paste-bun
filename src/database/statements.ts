@@ -6,14 +6,14 @@ export const statements = {
       content TEXT NOT NULL,
       highlight TEXT,
       visitors INTEGER DEFAULT 0,
-      token TEXT NOT NULL,
+      owner TEXT NOT NULL,
       expire_at DATETIME NOT NULL,
       created_at DATETIME NOT NULL
     ) WITHOUT ROWID`,
 
   // Insert a new paste
   INSERT: `
-    INSERT INTO pastes (id, content, highlight, token, expire_at, created_at)
+    INSERT INTO pastes (id, content, highlight, owner, expire_at, created_at)
     VALUES (?, ?, ?, ?, ?, ?)`,
 
   // Retrieve a paste
@@ -27,10 +27,6 @@ export const statements = {
   // Delete a paste by id
   DELETE_BY_ID: `
     DELETE FROM pastes WHERE id = ?`,
-
-  // Delete a paste by token
-  DELETE_BY_TOKEN: `
-    DELETE FROM pastes WHERE token = ?`,
 
   // Creates the PRAGMA statements
   CREATE_PRAGMA: "PRAGMA journal_mode = WAL; PRAGMA synchronous = NORMAL;",

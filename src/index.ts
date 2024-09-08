@@ -2,16 +2,34 @@ import { Elysia, redirect, t } from "elysia";
 import { html, Html } from "@elysiajs/html";
 import { staticPlugin } from "@elysiajs/static";
 import { tailwind } from "@gtramontina.com/elysia-tailwind";
-import { makeCookie, emptyCookie } from "@/utils/cookie";
+import { makeOwnerCookie } from "@/utils/cookie";
 import {
   getPaste,
   insertPaste,
   deletePaste,
   getLatestPastes,
 } from "@/database/functions";
+import cuid from "cuid";
 
 import Paste from "./components/paste";
 import Home from "./components/home";
+
+const AuthService = new Elysia({ name: "Service.Auth" }).derive(
+  { as: "scoped" },
+  ({ cookie: { ownerId }, set }) => {
+    let ownerIdValue = ownerId.value;
+    if (!ownerIdValue) {
+      const ownerId = cuid();
+      set.headers["Set-Cookie"] = makeOwnerCookie(ownerId);
+      ownerIdValue = ownerId;
+    }
+    return {
+      Auth: {
+        ownerId: ownerIdValue,
+      },
+    };
+  }
+);
 
 const app = new Elysia()
   .use(staticPlugin())
@@ -28,13 +46,13 @@ const app = new Elysia()
     })
   )
   .use(html())
+  .use(AuthService)
   .get("/", () => Home())
   .post(
     "/",
-    ({ body, set }) => {
+    ({ body, Auth: { ownerId } }) => {
       const { content, expiry, highlight } = body;
-      const [pasteId, deleteToken] = insertPaste(content, highlight, expiry);
-      set.headers["Set-Cookie"] = makeCookie(deleteToken);
+      const pasteId = insertPaste(content, highlight, ownerId, expiry);
       return redirect(`/${pasteId}`);
     },
     {
@@ -51,14 +69,13 @@ const app = new Elysia()
   )
   .get(
     "/:id",
-    ({ params: { id }, cookie: { deleteToken }, set }) => {
+    ({ params: { id }, set }) => {
       const paste = getPaste(id);
       if (!paste) {
         set.status = 404;
         return "Paste not found.";
       }
-      if (deleteToken) set.headers["Set-Cookie"] = emptyCookie;
-      return Paste({ paste: paste, deleteToken: deleteToken.value });
+      return Paste({ paste: paste });
     },
     {
       params: t.Object({
@@ -68,7 +85,16 @@ const app = new Elysia()
   )
   .get(
     "delete/:id",
-    ({ params: { id } }) => {
+    ({ set, params: { id }, Auth: { ownerId } }) => {
+      const paste = getPaste(id);
+      if (!paste) {
+        set.status = 404;
+        return "Paste not found.";
+      }
+      if (paste.owner !== ownerId) {
+        set.status = 403;
+        return "Forbidden.";
+      }
       deletePaste(id);
       return redirect("/");
     },

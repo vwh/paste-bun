@@ -3,10 +3,9 @@ import type { Paste as PasteType } from "@/types";
 
 interface PasteProps {
   paste: PasteType;
-  deleteToken: string | undefined;
 }
 
-export default function Paste({ paste, deleteToken }: PasteProps) {
+export default function Paste({ paste }: PasteProps) {
   return (
     <html lang="en">
       <head>
@@ -33,14 +32,6 @@ export default function Paste({ paste, deleteToken }: PasteProps) {
           <div class="flex items-center">
             <span class="font-semibold text-gray-400 w-24">Created at:</span>
             <span>{new Date(paste.created_at).toLocaleString()}</span>
-          </div>
-          <div class="flex items-center">
-            <span class="font-semibold text-gray-400 w-24">Delete token:</span>
-            {deleteToken ? (
-              <span class="bg-red-600 text-white px-2 py-1">{deleteToken}</span>
-            ) : (
-              <span>No delete token</span>
-            )}
           </div>
         </div>
         <div class="flex-grow flex flex-col overflow-hidden">

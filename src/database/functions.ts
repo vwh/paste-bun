@@ -24,10 +24,10 @@ export function getPaste(id: string): Paste | null {
 export function insertPaste(
   content: string,
   highlight: string,
+  owner: string,
   expiry: Period
-): [string, string] {
+) {
   const pasteId = cuid();
-  const deleteToken = cuid();
   const expireTime = getExpireTime(expiry);
   const createdTime = getNowTime();
 
@@ -35,16 +35,16 @@ export function insertPaste(
     pasteId,
     content,
     highlight,
-    deleteToken,
+    owner,
     expireTime,
     createdTime
   );
 
-  return [pasteId, deleteToken];
+  return pasteId;
 }
 
-export function deletePaste(token: string): void {
-  db.prepare(statements.DELETE_BY_TOKEN).run(token);
+export function deletePaste(id: string): void {
+  db.prepare(statements.DELETE_BY_ID).run(id);
 }
 
 export function getLatestPastes(): Paste[] {

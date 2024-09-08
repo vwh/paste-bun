@@ -4,7 +4,7 @@ export type Paste = {
   id: string;
   content: string;
   highlight: string | null;
-  token: string;
+  owner: string;
   visitors: number;
   expire_at: number;
   created_at: number;
