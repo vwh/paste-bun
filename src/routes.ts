@@ -80,7 +80,7 @@ export const createRoutes = (pasteManager: PasteManager) => {
           });
         }
         return new Response(paste.content, {
-          headers: { "Content-Type": "text/plain" },
+        headers: { "Content-Type": "text/plain; charset=UTF-8" },
         });
       },
       {
