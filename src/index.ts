@@ -1,18 +1,19 @@
 import { Elysia, redirect, t } from "elysia";
-import { html, Html } from "@elysiajs/html";
+import { html } from "@elysiajs/html";
 import { staticPlugin } from "@elysiajs/static";
 import { tailwind } from "@gtramontina.com/elysia-tailwind";
-import { makeOwnerCookie } from "@/utils/cookie";
+
 import {
   getPaste,
   insertPaste,
   deletePaste,
   getLatestPastes,
 } from "@/database/functions";
+import { makeOwnerCookie } from "@/utils/cookie";
 import cuid from "cuid";
 
-import Paste from "./components/paste";
-import Home from "./components/home";
+import Paste from "@/pages/paste";
+import Home from "@/pages/home";
 
 const AuthService = new Elysia({ name: "Service.Auth" }).derive(
   { as: "scoped" },
