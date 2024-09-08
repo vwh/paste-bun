@@ -49,7 +49,7 @@ export default function SelectLang() {
   return (
     <select
       name="highlight"
-      class="block w-full flex-grow sm:w-auto px-3 py-2 text-gray-200 bg-gray-700 border border-gray-600 shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+      class="bg-gray-700 w-full border border-gray-600 text-gray-300 py-2 px-4 leading-tight focus:outline-none focus:border-gray-500 appearance-none pr-8"
     >
       {languages.map((lang) => (
         <option>{lang === "plain" ? "TEXT" : lang.toUpperCase()}</option>

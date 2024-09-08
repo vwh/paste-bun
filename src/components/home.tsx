@@ -10,36 +10,33 @@ export default function Home() {
         <title>Paste Maker</title>
         <link href="./public/styles.css" rel="stylesheet" />
       </head>
-      <body class="bg-gray-900 text-gray-200 flex flex-col h-screen">
+      <body class="bg-gray-800 text-gray-100 h-screen flex flex-col">
         <nav class="bg-gray-800 p-4">
-          <h1 class="text-2xl font-bold text-gray-100">Paste Viewer</h1>
+          <h1 class="text-xl font-bold">Paste</h1>
         </nav>
-        <main class="flex-grow h-full flex flex-col">
-          <form action="/" method="post" class="flex flex-col h-full">
-            <div class="flex w-full">
-              <SelectLang />
-              <select
-                name="expiry"
-                class="block w-full flex-grow sm:w-auto px-3 py-2 text-gray-200 bg-gray-700 border border-gray-600 shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-              >
-                <option value="month">One Month</option>
-                <option value="week">One Week</option>
-                <option value="day">One Day</option>
-              </select>
-            </div>
-            <textarea
-              name="content"
-              placeholder="Enter your content"
-              class="w-full flex-grow h-full p-4 text-gray-100 bg-gray-800 border border-gray-600 focus:ring-blue-500 focus:border-blue-500 block font-mono"
-              style="resize: none; min-height: 0;"
-            />
-            <input
-              type="submit"
-              value="Create Paste"
-              class="w-full sm:w-auto px-4 py-2 text-gray-100 bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-            />
-          </form>
-        </main>
+        <form action="/" method="POST" class="flex flex-col flex-grow">
+          <div class="flex bg-gray-800">
+            <select
+              name="expiry"
+              class="bg-gray-700 w-full border border-gray-600 text-gray-300 py-2 px-4 leading-tight focus:outline-none focus:border-gray-500 appearance-none pr-8"
+            >
+              <option value="month" selected>
+                One Month
+              </option>
+              <option value="week">One Week</option>
+              <option value="day">One Day</option>
+            </select>
+            <SelectLang />
+          </div>
+          <textarea
+            name="content"
+            class="flex-grow resize-none p-4 bg-gray-800 border-gray-700 focus:border-gray-600 focus:outline-none text-gray-300"
+            placeholder="Start typing here..."
+          />
+          <button type="submit" class="bg-gray-700 text-gray-200 p-2 w-full">
+            Submit
+          </button>
+        </form>
       </body>
     </html>
   );

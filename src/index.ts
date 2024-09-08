@@ -69,13 +69,14 @@ const app = new Elysia()
   )
   .get(
     "/:id",
-    ({ params: { id }, set }) => {
+    ({ set, params: { id }, Auth: { ownerId } }) => {
       const paste = getPaste(id);
       if (!paste) {
         set.status = 404;
         return "Paste not found.";
       }
-      return Paste({ paste: paste });
+      const isOwner = paste.owner === ownerId;
+      return Paste({ paste, isOwner });
     },
     {
       params: t.Object({
