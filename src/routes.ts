@@ -194,21 +194,15 @@ export const createRoutes = (pasteManager: PasteManager) => {
 
     .get("/history", ({ Auth, query }: { Auth: Auth; query: Query }) => {
       const limit = 5;
-
-      const page = parseInt(query.page || "1", 10);
-
+      const page = Number.parseInt(query.page || "1", 10);
       const offset = (page - 1) * limit;
-
       const totalPastes = pasteManager.getPasteCountByOwner(Auth.ownerId);
-
       const totalPages = Math.ceil(totalPastes / limit);
-
       const pastes = pasteManager.getAllPastesByOwner(
         Auth.ownerId,
         limit,
         offset
       );
-
       return History({
         pastes,
         currentPage: page,
