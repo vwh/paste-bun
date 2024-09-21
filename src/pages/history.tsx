@@ -7,9 +7,15 @@ import HomeIcon from "@/components/icons/home";
 
 interface HistoryProps {
   pastes: Paste[];
+  currentPage: number;
+  totalPages: number;
 }
 
-export default function History({ pastes }: HistoryProps) {
+export default function History({
+  pastes,
+  currentPage,
+  totalPages,
+}: HistoryProps) {
   return (
     <html lang="en">
       <head>
@@ -65,6 +71,40 @@ export default function History({ pastes }: HistoryProps) {
               </li>
             ))}
           </ul>
+
+          <div class="flex justify-between mt-4">
+            {currentPage > 1 ? (
+              <a
+                href={`?page=${currentPage - 1}`}
+                class="bg-gray-700 text-gray-200 p-2 rounded"
+              >
+                Previous
+              </a>
+            ) : (
+              <button
+                class="bg-gray-700 text-gray-400 p-2 rounded opacity-50 cursor-not-allowed"
+                disabled
+              >
+                Previous
+              </button>
+            )}
+
+            {currentPage < totalPages ? (
+              <a
+                href={`?page=${currentPage + 1}`}
+                class="bg-gray-700 text-gray-200 p-2 rounded"
+              >
+                Next
+              </a>
+            ) : (
+              <button
+                class="bg-gray-700 text-gray-400 p-2 rounded opacity-50 cursor-not-allowed"
+                disabled
+              >
+                Next
+              </button>
+            )}
+          </div>
         </div>
       </body>
     </html>
