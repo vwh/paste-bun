@@ -8,6 +8,12 @@ Pastebin alternative built with Elysia, powered by the Bun runtime and SQLite fo
 
 ## 🚀 Development
 
+To install dependencies, run:
+
+```
+bun install
+```
+
 To start the development server, run:
 
 ```
