@@ -12,6 +12,14 @@ import Edit from "@/pages/edit";
 import ErrorPage from "@/pages/error";
 import History from "@/pages/history";
 
+interface Auth {
+  ownerId: string;
+}
+
+interface Query {
+  page?: string;
+}
+
 export const createRoutes = (pasteManager: PasteManager) => {
   return new Elysia()
     .use(authPlugin)
@@ -183,8 +191,28 @@ export const createRoutes = (pasteManager: PasteManager) => {
         }),
       }
     )
-    .get("/history", ({ Auth: { ownerId } }) => {
-      const pastes = pasteManager.getAllPastesByOwner(ownerId);
-      return History({ pastes });
+
+    .get("/history", ({ Auth, query }: { Auth: Auth; query: Query }) => {
+      const limit = 5;
+
+      const page = parseInt(query.page || "1", 10);
+
+      const offset = (page - 1) * limit;
+
+      const totalPastes = pasteManager.getPasteCountByOwner(Auth.ownerId);
+
+      const totalPages = Math.ceil(totalPastes / limit);
+
+      const pastes = pasteManager.getAllPastesByOwner(
+        Auth.ownerId,
+        limit,
+        offset
+      );
+
+      return History({
+        pastes,
+        currentPage: page,
+        totalPages,
+      });
     });
 };
