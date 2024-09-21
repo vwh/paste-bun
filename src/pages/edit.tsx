@@ -5,6 +5,7 @@ import Head from "@/components/head";
 import SelectHighlight from "@/components/select-highlight";
 import GithubIcon from "@/components/icons/github";
 import DeleteIcon from "@/components/icons/delete";
+import HistoryIcon from "@/components/icons/history";
 
 interface EditProps {
   paste: PasteType;
@@ -36,6 +37,13 @@ export default function Edit({ paste }: EditProps) {
               class="bg-gray-700 text-gray-200 p-2 rounded"
             >
               <GithubIcon />
+            </a>
+            <a
+              href="/history"
+              title="History"
+              class="bg-gray-700 text-gray-200 p-2 rounded"
+            >
+              <HistoryIcon />
             </a>
             <form action={`/delete/${paste.id}`} method="GET">
               <button
