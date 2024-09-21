@@ -60,4 +60,11 @@ export class PasteManager {
   public deletePaste(id: string): void {
     this.db.prepare(statements.DELETE).run(id);
   }
+
+  public getAllPastesByOwner(owner: string): Paste[] {
+    const result = this.db
+      .prepare(statements.RETRIEVE_ALL_BY_OWNER)
+      .all(owner, getNowTime()) as Paste[];
+    return result;
+  }
 }
