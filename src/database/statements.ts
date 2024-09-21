@@ -41,5 +41,13 @@ export const statements = {
   CREATE_PRAGMA: "PRAGMA journal_mode = WAL; PRAGMA synchronous = NORMAL;",
 
   RETRIEVE_ALL_BY_OWNER: `
-  SELECT * FROM pastes WHERE owner = ? AND expire_at > ? ORDER BY created_at DESC`,
+  SELECT * FROM pastes 
+  WHERE owner = ? AND expire_at > ? 
+  ORDER BY created_at DESC 
+  LIMIT ? OFFSET ?`,
+
+  RETRIEVE_PASTE_COUNT_BY_OWNER: `
+  SELECT COUNT(*) as count 
+  FROM pastes 
+  WHERE owner = ? AND expire_at > ?`,
 };
