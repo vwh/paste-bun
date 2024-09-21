@@ -3,6 +3,7 @@ import { Html } from "@elysiajs/html";
 import Head from "@/components/head";
 import SelectHighlight from "@/components/select-highlight";
 import GithubIcon from "@/components/icons/github";
+import HistoryIcon from "@/components/icons/history";
 
 export default function Home() {
   return (
@@ -22,6 +23,14 @@ export default function Home() {
             <h1 class="text-xl font-bold">PasteBun</h1>
           </a>
           <div class="flex items-center space-x-1">
+            <a
+              href="/history"
+              title="History"
+              class="bg-gray-700 text-gray-200 p-2 rounded"
+            >
+              <HistoryIcon />
+            </a>
+
             <a
               href="https://github.com/vwh/paste-bun"
               target="_blank"
