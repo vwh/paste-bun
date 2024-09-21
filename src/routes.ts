@@ -10,6 +10,7 @@ import Home from "@/pages/home";
 import Paste from "@/pages/paste";
 import Edit from "@/pages/edit";
 import ErrorPage from "@/pages/error";
+import History from "@/pages/history";
 
 export const createRoutes = (pasteManager: PasteManager) => {
   return new Elysia()
@@ -80,7 +81,7 @@ export const createRoutes = (pasteManager: PasteManager) => {
           });
         }
         return new Response(paste.content, {
-        headers: { "Content-Type": "text/plain; charset=UTF-8" },
+          headers: { "Content-Type": "text/plain; charset=UTF-8" },
         });
       },
       {
@@ -181,5 +182,9 @@ export const createRoutes = (pasteManager: PasteManager) => {
           highlight: t.String(),
         }),
       }
-    );
+    )
+    .get("/history", ({ Auth: { ownerId } }) => {
+      const pastes = pasteManager.getAllPastesByOwner(ownerId);
+      return History({ pastes });
+    });
 };
