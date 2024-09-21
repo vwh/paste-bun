@@ -61,10 +61,23 @@ export class PasteManager {
     this.db.prepare(statements.DELETE).run(id);
   }
 
-  public getAllPastesByOwner(owner: string): Paste[] {
+  public getAllPastesByOwner(
+    owner: string,
+    limit: number,
+    offset: number
+  ): Paste[] {
     const result = this.db
       .prepare(statements.RETRIEVE_ALL_BY_OWNER)
-      .all(owner, getNowTime()) as Paste[];
+      .all(owner, getNowTime(), limit, offset) as Paste[];
     return result;
+  }
+
+  public getPasteCountByOwner(owner: string): number {
+    const now = getNowTime();
+    const result = this.db
+      .prepare(statements.RETRIEVE_PASTE_COUNT_BY_OWNER)
+      .get(owner, now) as { count: number };
+
+    return result.count;
   }
 }
