@@ -39,4 +39,7 @@ export const statements = {
 
   // Creates the PRAGMA statements
   CREATE_PRAGMA: "PRAGMA journal_mode = WAL; PRAGMA synchronous = NORMAL;",
+
+  RETRIEVE_ALL_BY_OWNER: `
+  SELECT * FROM pastes WHERE owner = ? AND expire_at > ? ORDER BY created_at DESC`,
 };
