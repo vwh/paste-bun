@@ -8,6 +8,7 @@ import DeleteIcon from "@/components/icons/delete";
 import FileIcon from "@/components/icons/file";
 import PinIcon from "@/components/icons/pin";
 import ClipboardIcon from "@/components/icons/clipboard";
+import HistoryIcon from "@/components/icons/history";
 
 interface PasteProps {
   paste: PasteType;
@@ -48,6 +49,13 @@ export default function Paste({ paste, isOwner }: PasteProps) {
               class="bg-gray-700 text-gray-200 p-2 rounded"
             >
               <GithubIcon />
+            </a>
+            <a
+              href="/history"
+              title="History"
+              class="bg-gray-700 text-gray-200 p-2 rounded"
+            >
+              <HistoryIcon />
             </a>
             <a
               href={`/raw/${paste.id}`}
